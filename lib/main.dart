@@ -14,12 +14,45 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Excess Baggage Calculator',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-        ),
-        useMaterial3: true,
+      
+theme: ThemeData(
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: const Color(0xFF102A56),
+  ),
+  scaffoldBackgroundColor: const Color(0xFFF3F6FA),
+  useMaterial3: true,
+
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Colors.white,
+    contentPadding: const EdgeInsets.symmetric(
+      horizontal: 16,
+      vertical: 18,
+    ),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(14),
+      borderSide: const BorderSide(
+        color: Color(0xFF102A56),
+        width: 1.5,
       ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(14),
+      borderSide: const BorderSide(
+        color: Color(0xFF102A56),
+        width: 1.5,
+      ),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(14),
+      borderSide: const BorderSide(
+        color: Color(0xFF246BCE),
+        width: 2,
+      ),
+    ),
+  ),
+),
+
       home: const HomePage(),
     );
   }
@@ -85,15 +118,33 @@ class _HomePageState extends State<HomePage> {
           'Excess Baggage Calculator',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color(0xFF102A56),
         foregroundColor: Colors.white,
+        actions: [
+  IconButton(
+    tooltip: 'Reset Calculator',
+    icon: const Icon(Icons.refresh),
+    onPressed: () {
+      setState(() {
+        weightController.clear();
+        rateController.clear();
+        ticketClass = 'Economy';
+        excessWeight = 0;
+        excessCharge = 0;
+        serviceTax = 0;
+        totalPayable = 0;
+        calculated = false;
+      });
+    },
+  ),
+],
       ),
 
       drawer: Drawer(
         child: ListView(
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
+              decoration: BoxDecoration(color: Color(0xFF102A56),),
               child: Text(
                 'Baggage Calculator',
                 style: TextStyle(
@@ -130,11 +181,15 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Icon(
-              Icons.luggage,
-              size: 65,
-              color: Colors.blue,
-            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: Image.asset(
+                 'assets/airport_luggage.png',
+              width: double.infinity,
+              height: 190,
+              fit: BoxFit.cover,
+  ),
+),
 
             const SizedBox(height: 10),
 
@@ -192,10 +247,14 @@ class _HomePageState extends State<HomePage> {
                 decimal: true,
               ),
               decoration: const InputDecoration(
-                labelText: 'Excess Baggage Rate (RM/kg)',
-                prefixIcon: Icon(Icons.attach_money),
-                border: OutlineInputBorder(),
-              ),
+  labelText: 'Excess Baggage Rate (RM/kg)',
+  prefixText: 'RM ',
+  prefixStyle: TextStyle(
+    color: Color(0xFF102A56),
+    fontWeight: FontWeight.bold,
+  ),
+  border: OutlineInputBorder(),
+),
             ),
 
             const SizedBox(height: 25),
@@ -205,7 +264,7 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.calculate),
               label: const Text('Calculate Fee'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: const Color.fromARGB(255, 10, 43, 87),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.all(16),
               ),
@@ -298,55 +357,91 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('About'),
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color(0xFF102A56),
         foregroundColor: Colors.white,
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.luggage,
-                size: 80,
-                color: Colors.blue,
+      
+body: Container(
+  width: double.infinity,
+  decoration: const BoxDecoration(
+    image: DecorationImage(
+      image: AssetImage('assets/airport_luggage.png'),
+      fit: BoxFit.cover,
+      alignment: Alignment.center,
+      colorFilter: ColorFilter.mode(
+        Color(0x990A2342),
+        BlendMode.darken,
+      ),
+    ),
+  ),
+  child: Center(
+    child: SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(22),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.93),
+          borderRadius: BorderRadius.circular(22),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.luggage,
+              size: 75,
+              color: Color(0xFF102A56),
+            ),
+            const SizedBox(height: 18),
+            const Text(
+              'Excess Baggage Calculator',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF102A56),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Excess Baggage Calculator',
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Author: NURUL ANIS NASUHA BINTI MOHD NAZRI',
+              textAlign: TextAlign.center,
+            ),
+            const Text('Matric No: 2024282528'),
+            const Text(
+  'Course: ICT602 - MOBILE TECHNOLOGY AND DEVELOPMENT',
+  textAlign: TextAlign.center,
+  style: TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    color: Color(0xFF102A56),
+  ),
+),
+            const SizedBox(height: 25),
+            const Text('© 2026 Excess Baggage Calculator'),
+            const SizedBox(height: 15),
+            InkWell(
+              onTap: () async {
+                final url = Uri.parse(
+                  'https://github.com/2024282528-png/excess_baggage_calculator',
+                );
+                await launchUrl(url);
+              },
+              child: const Text(
+                'GitHub Repository: Click Here',
                 style: TextStyle(
-                  fontSize: 22,
+                  color: Color(0xFF102A56),
+                  decoration: TextDecoration.underline,
                   fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
-              Text('Author: NURUL ANIS NASUHA BINTI MOHD NAZRI'),
-              Text('Matric No: 2024282528'),
-              Text('Course: CS266'),
-              SizedBox(height: 25),
-              Text('© 2026 Excess Baggage Calculator'),
-              SizedBox(height: 10),
-              InkWell(
-  onTap: () async {
-    final url = Uri.parse(
-      'https://github.com/2024282528-png/excess_baggage_calculator',
-    );
-    await launchUrl(url);
-  },
-  child: const Text(
-    'GitHub Repository: Click Here',
-    style: TextStyle(
-      color: Colors.blue,
-      decoration: TextDecoration.underline,
+            ),
+          ],
+        ),
+      ),
     ),
   ),
 ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
