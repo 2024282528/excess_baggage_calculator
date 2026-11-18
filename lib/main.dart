@@ -1,5 +1,6 @@
 
 import 'package:material_ui/material_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -300,7 +301,7 @@ class AboutPage extends StatelessWidget {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
-      body: const Center(
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(25),
           child: Column(
@@ -327,7 +328,21 @@ class AboutPage extends StatelessWidget {
               SizedBox(height: 25),
               Text('© 2026 Excess Baggage Calculator'),
               SizedBox(height: 10),
-              Text('GitHub Repository: To be added'),
+              InkWell(
+  onTap: () async {
+    final url = Uri.parse(
+      'https://github.com/2024282528-png/excess_baggage_calculator',
+    );
+    await launchUrl(url);
+  },
+  child: const Text(
+    'GitHub Repository: Click Here',
+    style: TextStyle(
+      color: Colors.blue,
+      decoration: TextDecoration.underline,
+    ),
+  ),
+),
             ],
           ),
         ),
